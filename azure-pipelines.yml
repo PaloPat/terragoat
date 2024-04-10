@@ -40,21 +40,21 @@ stages:
     
   - job: Prisma_Cloud_Job
     displayName: Prisma Cloud Job
-- task: UsePythonVersion@0
-    inputs:
-    versionSpec: '3.8'
-    displayName: 'Install Python 3.8'
-  - script: pip install checkov
-    displayName: 'Install Checkov'
-  - script: checkov -d . --bc-api-key dd516dc8-59b4-412a-92ab-7766dbb033b0::BXtATEBSqCGMOfJGhzz9Va5ZLPA= --repo-id hacksawduggan/PaloPatADO branch master -o cli -o junitxml --output-file-path console,CheckovReport.xml
-    workingDirectory: $(System.DefaultWorkingDirectory)
-  displayName: 'Scan with Prisma Cloud'
-  env:
-    PRISMA_API_URL: https://api4.prismacloud.io
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: '**/CheckovReport.xml'
-      testRunTitle: PrismaCloudTests
-    displayName: Publish Test Results
-    condition: always()
+    - task: UsePythonVersion@0
+        inputs:
+        versionSpec: '3.8'
+        displayName: 'Install Python 3.8'
+      - script: pip install checkov
+        displayName: 'Install Checkov'
+      - script: checkov -d . --bc-api-key dd516dc8-59b4-412a-92ab-7766dbb033b0::BXtATEBSqCGMOfJGhzz9Va5ZLPA= --repo-id hacksawduggan/PaloPatADO branch master -o cli -o junitxml --output-file-path console,CheckovReport.xml
+        workingDirectory: $(System.DefaultWorkingDirectory)
+      displayName: 'Scan with Prisma Cloud'
+      env:
+        PRISMA_API_URL: https://api4.prismacloud.io
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/CheckovReport.xml'
+        testRunTitle: PrismaCloudTests
+      displayName: Publish Test Results
+      condition: always()

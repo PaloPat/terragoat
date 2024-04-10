@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: palopatterragoat 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: palopatterragoat
+  template:
+    metadata:
+      labels:
+        app: palopatterragoat 
+    spec:
+      containers:
+        - name: palopatterragoat 
+          image: palopatregistry.azurecr.io/palopatterragoat
+          ports:
+          - containerPort: 80

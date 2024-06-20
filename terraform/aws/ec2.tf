@@ -48,9 +48,7 @@ resource "aws_ebs_volume" "web_host_storage" {
     git_repo             = "terragoat"
     yor_trace            = "c5509daf-10f0-46af-9e03-41989212521d"
   })
-  encrypted = true
 }
-
 
 resource "aws_ebs_snapshot" "example_snapshot" {
   # ebs snapshot without encryption
@@ -288,6 +286,16 @@ resource "aws_s3_bucket" "flowbucket" {
     yor_trace            = "f058838a-b1e0-4383-b965-7e06e987ffb1"
   })
 }
+
+
+resource "aws_s3_bucket_versioning" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 
 output "ec2_public_dns" {
   description = "Web Host Public DNS name"
